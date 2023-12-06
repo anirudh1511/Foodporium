@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FOODPORIUM</title>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      .product {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        background-color: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .product img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      .cart-counter {
+        position: absolute;
+        top: 5px;
+        right: 15px;
+        background-color: #343a40;
+        color: #fff;
+        border-radius: 50%;
+        padding: 5px 10px;
+        font-size: 14px;
+        z-index: 999;
+      }
+
+      .cart {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+      }
+
+      .cart-btn {
+        background-color: #28a745;
+        border: none;
+        color: #fff;
+        border-radius: 30px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      #itemAddedModal {
+        background-color: rgba(0, 0, 0, 0.5);
+      }
+      .closeBtn {
+        background-color: red;
+        border-radius: 0.2rem;
+        margin-left: 1rem;
+        border: none;
+        color: white;
+      }
+      .successImg {
+        max-width: 100%;
+        max-height: 50px; /* You can adjust this value as needed */
+        display: block;
+        margin: 0 auto;
+      }
+      /* Add this to your existing CSS */
+      .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+        z-index: 1000; /* Place it above other content */
+        display: none; /* Initially hidden */
+      }
+
+      /* Apply this class to the overlay when needed */
+      .overlay.active {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="my-3">Pizza Regular</h2>
+          <div class="row text-center">
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/onion pizza.jpg"
+                  alt="Pizza 1"
+                />
+                <h4>Onion Pizza</h4>
+                <p>Price: &#8377;70.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name="Onion Pizza"
+                  data-price="70.00"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/pizza.png"
+                  alt="Pizza 2"
+                />
+                <h4>Capsicum Pizza</h4>
+                <p>Price: &#8377;70.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name="Capsicum Pizza"
+                  data-price="70.00"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/tomato pizza.png"
+                  alt="Pizza 3"
+                />
+                <h4>Tomato Pizza</h4>
+                <p>Price: &#8377;70.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name="Tomato Pizza"
+                  data-price="70.00"
+                >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="product">
+              <img
+                class="img-fluid d-block mx-auto"
+                style="max-height: 150px"
+                src="./images/corn.png"
+                alt="Pizza 3"
+              />
+              <h4>Sweet Corn Pizza</h4>
+              <p>Price: &#8377;70.00</p>
+              <button
+                class="btn btn-primary add-to-cart"
+                data-name="Sweat Corn Pizza"
+                data-price="70.00"
+              >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+          <h2 class="my-3">Burger</h2>
+          <div class="row text-center">
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/burger.png"
+                  alt="Burger 1"
+                />
+                <h4>Tikki Burger</h4>
+                <p>Price: &#8377;50.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name="Tikki Burger"
+                  data-price="50.00"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/cheese burger.jpg"
+                  alt="Burger 2"
+                />
+                <h4>Cheese Burger</h4>
+                <p>Price: &#8377;60.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name="Cheeseburger"
+                  data-price="60.00"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/burger.png"
+                  alt="Burger 3"
+                />
+                <h4>Stuff Burger</h4>
+                <p>Price: &#8377;80.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name=" Stuff Burger"
+                  data-price="80.00"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/burger.png"
+                  alt="Burger 3"
+                />
+                <h4>Maharaja Burger</h4>
+                <p>Price: &#8377;100.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name=" Maharaja Burger"
+                  data-price="100.00"
+                >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+        <h2 class="my-3">Pasta</h2>
+        <div class="row text-center">
+          <div class="col-md-4">
+            <div class="product">
+              <img
+                class="img-fluid d-block mx-auto"
+                style="max-height: 150px"
+                src="./images/red suce pasta.png"
+                alt="Pasta  1"
+              />
+              <h4> Red Souce pasta</h4>
+              <p>Price: &#8377;100.00</p>
+              <button
+                class="btn btn-primary add-to-cart"
+                data-name="Red Souce pasta"
+                data-price="100.00"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="product">
+              <img
+                class="img-fluid d-block mx-auto"
+                style="max-height: 150px"
+                src="./images/cheese pasta.png"
+                alt="Pasta 2"
+              />
+              <h4>Cheese Pasta </h4>
+              <p>Price: &#8377;130.00</p>
+              <button
+                class="btn btn-primary add-to-cart"
+                data-name="Cheese Pasta"
+                data-price="130.00"
+              > 
+                  Add to Cart           
+                  </button>
+              </div>
+            </div>
+          </div>
+          <h2 class="my-3">Sandwich</h2>
+          <div class="row text-center">
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/veg sanwich.png"
+                  alt="Sandwich 1"
+                />
+                <h4>Grilled  Sandwich</h4>
+                <p>Price: &#8377;60.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name="Grilled  Sandwich"
+                  data-price="60.00"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/paneer sandwich.png"
+                  alt="Sandwich 2"
+                />
+                <h4>Paneer Sandwich</h4>
+                <p>Price: &#8377;100.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name="Paneer Sandwich"
+                  data-price="100.00"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/sandwich.png"
+                  alt="Sandwich 3"
+                />
+                <h4>Cheese sandwich</h4>
+                <p>Price: &#8377;150.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name="Cheese sandwich"
+                  data-price="150.00"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/garlic.png"
+                  alt="Sandwich 4"
+                />
+                <h4>Garlic bread</h4>
+                <p>Price: &#8377;120.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name="Garlic bread"
+                  data-price="120.00"
+                >
+                  Add to Cart
+                </button>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="product">
+                <img
+                  class="img-fluid d-block mx-auto"
+                  style="max-height: 150px"
+                  src="./images/calzone.png"
+                  alt="Sandwich 5"
+                />
+                <h4>Calzone</h4>
+                <p>Price: &#8377;110.00</p>
+                <button
+                  class="btn btn-primary add-to-cart"
+                  data-name="Calzone"
+                  data-price="110.00"
+                >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+        </div>
+        <h2 class="my-3">Fries</h2>
+        <div class="row text-center">
+          <div class="col-md-4">
+            <div class="product">
+              <img
+                class="img-fluid d-block mx-auto"
+                style="max-height: 150px"
+                src="./images/fries.png"
+                alt=" Fries 1"
+              />
+              <h4>Fries</h4>
+              <p>Price: &#8377; 50.00</p>
+              <button
+                class="btn btn-primary add-to-cart"
+                data-name="Fries"
+                data-price="50.00"
+              >
+                Add to Cart
+              </button>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="product">
+              <img
+                class="img-fluid d-block mx-auto"
+                style="max-height: 150px"
+                src="./images/peri peri.png"
+                alt="Fries 2"
+              />
+              <h4>Peri Peri Fries</h4>
+              <p>Price: &#8377;70.00</p>
+              <button
+                class="btn btn-primary add-to-cart"
+                data-name="Peri Peri Fries"
+                data-price="70.00"
+              >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+      </div>
+      <h2 class="my-3">Momo</h2>
+      <div class="row text-center">
+        <div class="col-md-4">
+          <div class="product">
+            <img
+              class="img-fluid d-block mx-auto"
+              style="max-height: 150px"
+              src="./images/mom.png"
+              alt="Mpmp 1"
+            />
+            <h4>Momo</h4>
+            <p>Price: &#8377;50.00</p>
+            <button
+              class="btn btn-primary add-to-cart"
+              data-name="Momo"
+              data-price="50.00"
+            >
+              Add to Cart
+            </button>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="product">
+            <img
+              class="img-fluid d-block mx-auto"
+              style="max-height: 150px"
+              src="./images/roll.png"
+              alt="Roll 2"
+            />
+            <h4>Veg Roll</h4>
+            <p>Price: &#8377;50.00</p>
+            <button
+              class="btn btn-primary add-to-cart"
+              data-name="Veg Roll"
+              data-price="50.00"
+            >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <h2 class="my-3">Shakes</h2>
+    <div class="row text-center">
+      <div class="col-md-4">
+        <div class="product">
+          <img
+            class="img-fluid d-block mx-auto"
+            style="max-height: 150px"
+            src="./images/chocolate.png"
+            alt="Shake 1"
+          />
+          <h4> Chocolate Shake</h4>
+          <p>Price: &#8377;50.00</p>
+          <button
+            class="btn btn-primary add-to-cart"
+            data-name="Chocolate Shake"
+            data-price="50.00"
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="product">
+          <img
+            class="img-fluid d-block mx-auto"
+            style="max-height: 150px"
+            src="./images/vanila.png"
+            alt="Shake 2"
+          />
+          <h4>Vanilla Shake</h4>
+          <p>Price: &#8377;50.00</p>
+          <button
+            class="btn btn-primary add-to-cart"
+            data-name="Vanilla Shake"
+            data-price="50.00"
+          >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+  </div>
+  <h2 class="my-3">Combos</h2>
+  <div class="row text-center">
+    <div class="col-md-4">
+      <div class="product">
+        <img
+          class="img-fluid d-block mx-auto"
+          style="max-height: 150px"
+          src="./images/combo 1.png"
+          alt="Combo 1"
+        />
+        <h4> Coke+Fries+Burger</h4>
+        <p>Price: &#8377;120.00</p>
+        <button
+          class="btn btn-primary add-to-cart"
+          data-name="Coke+Fries+Burger"
+          data-price="120.00"
+        >
+          Add to Cart
+        </button>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="product">
+        <img
+          class="img-fluid d-block mx-auto"
+          style="max-height: 150px"
+          src="./images/sandwich.png"
+          alt="Combo 2"
+        />
+        <h4>Fanta+Fries+Pasta</h4>
+        <p>Price: &#8377;150.00</p>
+        <button
+          class="btn btn-primary add-to-cart"
+          data-name="Fanta+Fries+Pasta"
+          data-price="150.00"
+        >
+        Add to Cart
+      </button>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="product">
+      <img
+        class="img-fluid d-block mx-auto"
+        style="max-height: 150px"
+        src="./images/sandwich.png"
+        alt="Combo 3"
+      />
+      <h4> Coke+Fries+Momo</h4>
+      <p>Price: &#8377;120.00</p>
+      <button
+        class="btn btn-primary add-to-cart"
+        data-name="Coke+Fries+Momo"
+        data-price="120.00"
+      >
+      Add to Cart
+    </button>
+  </div>
+</div>
+<div class="col-md-4">
+  <div class="product">
+    <img
+      class="img-fluid d-block mx-auto"
+      style="max-height: 150px"
+      src="./images/sandwich.png"
+      alt="Combo 4"
+    />
+    <h4>Coke+Burger+Pizza</h4>
+    <p>Price: &#8377;140.00</p>
+    <button
+      class="btn btn-primary add-to-cart"
+      data-name="Coke+Burger+Pizza"
+      data-price="140.00"
+    >
+    Add to Cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cart Item Added Modal -->
+    <div
+      class="modal fade"
+      id="itemAddedModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="itemAddedModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="itemAddedModalLabel">
+              Item Added to Cart
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="itemAddedMessage">
+            <!-- Item added message will be displayed here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="cart">
+      <button
+        class="cart-btn"
+        id="cartCounter"
+        data-toggle="modal"
+        data-target="#cartModal"
+      >
+        View Cart 0
+      </button>
+    </div>
+
+    <!-- Cart Modal -->
+    <div
+      class="modal fade"
+      id="cartModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="cartModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="cartModalLabel">Your Cart</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" id="cartItems">
+            <!-- Cart items will be displayed here -->
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Continue Shopping
+            </button>
+            <button type="button" class="btn btn-primary" id="checkoutBtn">
+              Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Modal -->
+    <div
+      class="modal fade"
+      style="overflow-y: scroll"
+      id="checkoutModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="checkoutModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="checkoutModalLabel">Checkout</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="checkoutForm">
+              <div class="form-group">
+                <label for="name">Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="name"
+                  name="name"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="address"
+                  name="address"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input
+                  type="tel"
+                  class="form-control"
+                  id="phone"
+                  name="phone"
+                  required
+                />
+              </div>
+              <h5 class="modal-title" id="checkoutModalLabel">Items</h5>
+              <div class="modal-body" id="cartItemsFinal">
+                <!-- Cart items will be displayed here -->
+              </div>
+              <h5 class="modal-title text-primary" id="grandTotal">Total:00</h5>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              id="orderButton"
+              form="checkoutForm"
+            >
+              Order
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Response Modal -->
+    <div
+      class="modal fade"
+      id="responseModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="responseModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="responseModalLabel">Your Order</h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body text-center" id="responseMessage">
+            <!-- Response message will be displayed here -->
+          </div>
+          <div class="modal-footer justify-content-center">
+            <div id="checkmarkContainer"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+     <!-- Overlay element -->
+  <div class="overlay"></div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      const cartItems = [];
+      let cartCounter = 0;
+      let final = 0;
+      function openCheckoutModal() {
+        $("#cartModal").modal("hide");
+        $("#checkoutModal").modal("show");
+      }
+      document.addEventListener("DOMContentLoaded", () => {
+        const addToCartButtons = document.querySelectorAll(".add-to-cart");
+        addToCartButtons.forEach((button) => {
+          button.addEventListener("click", addToCart);
+        });
+
+        const checkoutButton = document.getElementById("checkoutBtn");
+        checkoutButton.addEventListener("click", openCheckoutModal);
+
+        const orderButton = document.getElementById("orderButton");
+        orderButton.addEventListener("click", (e) => submitForm(e));
+      });
+
+      function addToCart(event) {
+        const name = event.target.getAttribute("data-name");
+        const price = parseFloat(event.target.getAttribute("data-price"));
+        cartItems.push({ name, price });
+        cartCounter++;
+        updateCartCounter();
+        updateItemAddedModal(name);
+      }
+
+      function updateCartCounter() {
+        const cartCounterDiv = document.getElementById("cartCounter");
+        cartCounterDiv.textContent = View Items ${cartCounter};
+      }
+
+      function updateItemAddedModal(itemName) {
+        const itemAddedMessage = document.getElementById("itemAddedMessage");
+        itemAddedMessage.textContent = ✓ ${itemName} added to your cart!;
+        $("#itemAddedModal").modal("show");
+      }
+
+      function removeCartItem(index) {
+        cartItems.splice(index, 1); // Remove the item at the specified index
+        cartCounter--;
+        updateCartCounter();
+        updateCartModal();
+      }
+
+      function totalFunc(price) {
+        return price;
+      }
+
+      function updateCartModal() {
+        const cartItemsDiv = document.getElementById("cartItems");
+        const cartItemsDivFinal = document.getElementById("cartItemsFinal");
+        cartItemsDiv.innerHTML = "";
+        cartItemsDivFinal.innerHTML = "";
+        let total = 0;
+        var dropdownTriggerText = document.createTextNode("\u20B9");
+
+        cartItems.forEach((item, index) => {
+          total += item.price;
+          const itemWrapper = document.createElement("div");
+          itemWrapper.className = "d-flex my-4";
+          const itemDiv = document.createElement("div");
+          const itemBtn = document.createElement("button");
+          itemBtn.innerHTML = "X";
+          itemBtn.className = "closeBtn";
+
+          itemDiv.textContent = `${item.name} - ${
+            dropdownTriggerText.nodeValue
+          }${item.price.toFixed(2)}`;
+          itemBtn.addEventListener("click", () => removeCartItem(index)); // Attach event handler to the close button
+          itemWrapper.appendChild(itemDiv);
+          itemWrapper.appendChild(itemBtn);
+          cartItemsDiv.appendChild(itemWrapper);
+        });
+        cartItems.forEach((item, index) => {
+          const itemWrapperf = document.createElement("div");
+          itemWrapperf.className = "d-flex my-4";
+          const itemDivf = document.createElement("div");
+          itemDivf.textContent = `${index + 1 + ". "}${item.name} - ${
+            dropdownTriggerText.nodeValue
+          }${item.price.toFixed(2)}`;
+          itemWrapperf.appendChild(itemDivf);
+          cartItemsDivFinal.appendChild(itemWrapperf);
+        });
+
+        const grandTotal = document.getElementById("grandTotal");
+        grandTotal.innerHTML = `Total: ${
+          dropdownTriggerText.nodeValue + total
+        }`;
+        final = total;
+        const checkoutBtn = document.getElementById("checkoutBtn");
+        checkoutBtn.textContent = `Checkout - Total: ${
+          dropdownTriggerText.nodeValue
+        } ${total.toFixed(2)}`;
+      }
+
+      $("#cartModal").on("show.bs.modal", function () {
+        updateCartModal();
+      });
+
+      function toggleOverlay() {
+        const overlay = document.querySelector(".overlay");
+        overlay.classList.toggle("active");
+      }
+
+      function submitForm(event) {
+        event.preventDefault();
+        const apiUrl =
+          "https://rk4jmj3elj.execute-api.us-east-1.amazonaws.com/two/post";
+
+        const name = document.getElementById("name").value;
+        const address = document.getElementById("address").value;
+        const phone = document.getElementById("phone").value;
+        if (
+          name === "" ||
+          address === "" ||
+          phone === "" ||
+          phone.length !== 10 ||
+          cartItems.length <= 0
+        ) {
+          const responseMessage = document.getElementById("responseMessage");
+          if(cartItems.length>0){
+
+            responseMessage.innerHTML = "<strong class='text-danger'>Enter Valid Data</strong>";
+          }
+          else{
+
+            responseMessage.innerHTML = "<strong class='text-danger'>Enter Valid Data or Add items to Cart</strong>";
+          }
+          toggleOverlay()
+          $("#responseModal").modal("show");
+          setTimeout(function () {
+            toggleOverlay()
+            $("#responseModal").modal("hide");
+          }, 3000);
+          return;
+        }
+        const items = cartItems;
+        const grandTotal = totalFunc();
+
+        const data = {
+          name: name,
+          address: address,
+          phone: phone,
+          items: items,
+          total: final,
+        };
+        fetch(apiUrl, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((response) => response.json())
+          .then((result) => {
+            const responseMessage = document.getElementById("responseMessage");
+
+            // Clear any existing content in the checkmark container
+            const checkmarkContainer =
+              document.getElementById("checkmarkContainer");
+            checkmarkContainer.innerHTML = "";
+
+            responseMessage.textContent = "Ordered successfully!";
+
+            // Create an image element for the checkmark
+            const checkmarkImage = document.createElement("img");
+            checkmarkImage.className = "successImg";
+            checkmarkImage.src = "./images/success.png"; // Update with your image path
+            checkmarkImage.alt = "Checkmark";
+            checkmarkContainer.appendChild(checkmarkImage);
+
+            $("#responseModal").modal("show"); // Display the response modal
+          })
+          .catch((error) => {
+            const responseMessage = document.getElementById("responseMessage");
+            responseMessage.textContent = "Order Unsuccessfull";
+            $("#responseModal").modal("show"); // Display the response modal
+          });
+
+        $("#checkoutModal").modal("hide");
+      }
+    </script>
+  </body>
+</html>
